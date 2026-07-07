@@ -23,9 +23,9 @@ jobs:
 
       - name: Fetch FLF and post to Slack
         env:
-          SNOWFLAKE_ACCOUNT:          ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER:             ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_WAREHOUSE:        ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_PRIVATE_KEY_B64:  ${{ secrets.SNOWFLAKE_PRIVATE_KEY_B64 }}
-          SLACK_BOT_TOKEN:            ${{ secrets.SLACK_BOT_TOKEN }}
+          SNOWFLAKE_ACCOUNT:    ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER:       ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_WAREHOUSE:  ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PASSWORD:   ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SLACK_BOT_TOKEN:      ${{ secrets.SLACK_BOT_TOKEN }}
         run: python fetch_and_post.py
