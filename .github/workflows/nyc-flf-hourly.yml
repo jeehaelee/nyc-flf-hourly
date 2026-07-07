@@ -1,0 +1,31 @@
+name: NYC FLF Hourly Slack
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # top of every hour, UTC
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  post-flf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install snowflake-connector-python slack_sdk cryptography
+
+      - name: Fetch FLF and post to Slack
+        env:
+          SNOWFLAKE_ACCOUNT:          ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER:             ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_WAREHOUSE:        ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PRIVATE_KEY_B64:  ${{ secrets.SNOWFLAKE_PRIVATE_KEY_B64 }}
+          SLACK_BOT_TOKEN:            ${{ secrets.SLACK_BOT_TOKEN }}
+        run: python fetch_and_post.py
